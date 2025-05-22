@@ -6,19 +6,15 @@ import json
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
-from matplotlib.ticker import MaxNLocator
 
-# Naudotojo nurodytas modelio pavadinimas
 model_name = "4x_foolhardy_Remacri"
 base_dir = r"C:\Users\konte\ESRGAN\all_models_results"
 model_folder = os.path.join(base_dir, model_name + "_results")
 json_file = os.path.join(model_folder, model_name + "_metrics.json")
 
-# JSON įkėlimas
 with open(json_file, 'r') as f:
     data = json.load(f)
 
-# Pašaliname "_average" įrašą, jei jis egzistuoja
 if "_average" in data:
     data.pop("_average")
 
@@ -26,7 +22,6 @@ df = pd.DataFrame(data).T
 df.index = df.index.astype(str)
 df = df.sort_index()
 
-# Spalvų nustatymas
 colors = {
     'psnr': '#FF8000',  # Tamsiai oranžinė
     'ssim': '#00A64C',  # Tamsiai žalia
@@ -35,7 +30,6 @@ colors = {
     'grid': '#E0E0E0'  # Šviesesnė pilka tinkleliui
 }
 
-# Kuriame grafiką su 3 subplotais
 plt.figure(figsize=(12, 10))
 gs = gridspec.GridSpec(3, 1, height_ratios=[1, 1, 1], hspace=0.3)
 
@@ -92,15 +86,12 @@ for i, v in enumerate(df["mse"]):
     ax3.annotate(f"{v:.3f}", (i, v), textcoords="offset points",
                  xytext=(0, 5), ha='center', fontsize=8, color=colors['mse'])
 
-# Bendri nustatymai visiems subplotams
 for ax in [ax1, ax2, ax3]:
-    # Nustatome x ašies žymes visiems subplotams
     ax.set_xticks(range(len(df.index)))
     ax.set_xticklabels(df.index, rotation=45, ha='right', fontsize=9)
 
 plt.tight_layout(pad=2.0)
 
-# Išsaugojimas
 output_path = os.path.join(model_folder, "metrics_diagram.png")
 plt.savefig(output_path, dpi=300, bbox_inches='tight')
 plt.show()

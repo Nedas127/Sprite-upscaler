@@ -28,7 +28,7 @@ class SmoothFilter(Enum):
     EDGE_PRESERVING = auto()
 
 
-# Existing edge detection kernels (unchanged)
+# Edge detection kernels
 FILTERS_X: dict[EdgeFilter, np.ndarray] = {
     EdgeFilter.SOBEL: np.array(
         [
@@ -262,19 +262,14 @@ def smooth_edges(
     return smooth_image(image, smoothing, edge_mask=edges, **kwargs)
 
 
-# Example usage
 if __name__ == "__main__":
-    # Load an image
     image = cv2.imread("input.png")
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-    # Option 1: Simple smoothing
     smoothed = smooth_image(image, SmoothFilter.GAUSSIAN_5x5)
 
-    # Option 2: Edge-preserving smoothing
     edge_preserved = smooth_image(image, SmoothFilter.BILATERAL, diameter=9, sigmaColor=75, sigmaSpace=75)
 
-    # Option 3: Selective edge smoothing
     edge_smoothed = smooth_edges(
         image,
         edge_detection=EdgeFilter.SCHARR,
@@ -282,7 +277,6 @@ if __name__ == "__main__":
         edge_threshold=0.08
     )
 
-    # Save results
     cv2.imwrite("smoothed.png", cv2.cvtColor(smoothed, cv2.COLOR_RGB2BGR))
     cv2.imwrite("edge_preserved.png", cv2.cvtColor(edge_preserved, cv2.COLOR_RGB2BGR))
     cv2.imwrite("edge_smoothed.png", cv2.cvtColor(edge_smoothed, cv2.COLOR_RGB2BGR))
