@@ -52,7 +52,7 @@ python main.py 4x_PixelPerfectV4_137000_G --resize=64x64
 ### Network interpolation demo
 You can interpolate the RRDB_ESRGAN and RRDB_PSNR or any other models with alpha in [0, 1].
 
-1. Run `python net_interp.py 0.8`, where *0.8* is the interpolation parameter and you can change it to any value in [0,1].
+1. Run `python model_interpolator.py 0.8`, where *0.8* is the interpolation parameter and you can change it to any value in [0,1].
 2. Run `python main.py models/interp_08.pth`, where *models/interp_08.pth* is the model path.
 
 <p align="center">
