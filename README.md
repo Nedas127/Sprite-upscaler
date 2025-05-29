@@ -25,11 +25,30 @@ cd Sprite-upscaler
 ```
 2. Place your own **low-resolution images** in `./LR` folder. (There are fifteen sample images - various „OnlyFortress" 2D mobile game sprites).
 3. Download pretrained models from [Google Drive](https://drive.google.com/drive/folders/1fds6bTbmZJxGoW8pteWWR9sfNTmZcX2N?usp=drive_link). Place the models in `./models`. I provide twenty six different models that varies in architecture and category type. Most of the pre-trained models can be found in https://openmodeldb.info/
-4. Run test. I provide models like (4x_PixelPerfectV4_137000_G, 003_realSR_BSRGAN_DFO_s64w8_SwinIR-M_x4_GAN, RRDB_ESRGAN_x4, RRDB_PSNR and 22 other). You can configure which model you want to load in the `test.py`. If you want to load them all specify "none"
+4. Run test. I provide models like (4x_PixelPerfectV4_137000_G, 003_realSR_BSRGAN_DFO_s64w8_SwinIR-M_x4_GAN, RRDB_ESRGAN_x4, RRDB_PSNR and 22 other). Test all models with default settings
 ```
 python test.py
 ```
+
+You can configure additional parameters, etc. which model you want to load in the `test.py` or what should be the generated output size.
+## Test specific model
+```
+python test.py RRDB_ESRGAN_x4
+```
+## Resize output to 128x128 pixels
+```
+python test.py --resize=128x128
+```
+## Scale output to 50% of upscaled size
+```
+python test.py --resize=0.5
+```
+## Test specific model and resize to 64x64
+```
+python test.py 4x_PixelPerfectV4_137000_G --resize=64x64
+```
 5. The results are in `./results` folder.
+
 ### Network interpolation demo
 You can interpolate the RRDB_ESRGAN and RRDB_PSNR or any other models with alpha in [0, 1].
 
