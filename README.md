@@ -45,12 +45,8 @@ After running the tests, you can generate detailed visualization charts for mode
 
 Configure the visualization script: Update the model name and paths in the visualization script:
 
-pythonmodel_name = "your_model_name"  # e.g., "4x_foolhardy_Remacri"
-base_dir = r"path_to_your_results"  # e.g., r"C:\Users\username\ESRGAN\all_models_results"
-
-Run the visualization:
-
-python visualize_metrics.py
+1. `pythonmodel_name = "your_model_name"`  # e.g., "4x_foolhardy_Remacri"
+2. `base_dir = r"path_to_your_results"`  # e.g., r"C:\Users\username\ESRGAN\all_models_results"
 
 Generated outputs:
 
