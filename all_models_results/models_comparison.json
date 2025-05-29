@@ -1,0 +1,24 @@
+[
+  {
+    "model_name": "4x_foolhardy_Remacri",
+    "processing_time": 10.82724404335022,
+    "metrics": {
+      "avg_mse": 0.20878989280511936,
+      "avg_psnr": 10.493975143543084,
+      "avg_ssim": 0.5935014843940735,
+      "processed_images": 15,
+      "total_images": 15
+    }
+  },
+  {
+    "model_name": "4x_foolhardy_Remacri_ExtraSmoother",
+    "processing_time": 10.777459859848022,
+    "metrics": {
+      "avg_mse": 0.021872145178106924,
+      "avg_psnr": 18.33861314782372,
+      "avg_ssim": 0.6707304656505585,
+      "processed_images": 15,
+      "total_images": 15
+    }
+  }
+]
