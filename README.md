@@ -1,6 +1,6 @@
 # Sprite Upscaler - AI-Powered Image Upscaling with Transparency Handling
 
-This repository provides a comprehensive pipeline for upscaling images while preserving transparency using multiple AI models. It includes testing codes, pretrained models, and a network interpolation demo.
+This repository provides a comprehensive pipeline for upscaling images while preserving transparency using multiple AI models. It includes testing codes, pretrained models, a network interpolation demo and advanced metrics visualization.
 
 ## Key Features
 - Dual background technique for accurate transparency preservation
@@ -15,7 +15,7 @@ JSON metrics export for detailed analysis
 #### Dependencies
 - Python 3
 - [PyTorch >= 1.0](https://pytorch.org/) (CUDA version >= 7.5 if installing with CUDA. [More details](https://pytorch.org/get-started/previous-versions/))
-- Required packages: `pip install numpy opencv-python pillow torch spandrel`
+- Required packages: `pip install numpy opencv-python pillow torch spandrel matplotlib pandas`
 
 ### Test models
 1. Clone this github repo.
@@ -40,6 +40,24 @@ You can interpolate the RRDB_ESRGAN and RRDB_PSNR or any other models with alpha
   <img height="400" src="figures/43074.gif">
 </p>
 
+### Metrics Visualization
+After running the tests, you can generate detailed visualization charts for model performance analysis:
+
+Configure the visualization script: Update the model name and paths in the visualization script:
+
+pythonmodel_name = "your_model_name"  # e.g., "4x_foolhardy_Remacri"
+base_dir = r"path_to_your_results"  # e.g., r"C:\Users\username\ESRGAN\all_models_results"
+
+Run the visualization:
+
+python visualize_metrics.py
+
+Generated outputs:
+
+Interactive matplotlib charts showing PSNR, SSIM, and MSE metrics
+High-resolution PNG diagram saved as metrics_diagram.png
+Professional styling with color-coded metrics and grid overlays
+
 ### Pipeline Architecture
 Core Components:
 
@@ -47,6 +65,7 @@ ImageProcessor: Handles transparency extraction and image resizing
 ModelProcessor: Manages model loading and upscaling operations
 MetricsCalculator: Computes MSE, PSNR, and SSIM quality metrics
 UpscalingPipeline: Orchestrates the complete processing workflow
+MetricsVisualizer: Generates professional charts and statistical analysis
 
 Transparency Preservation Algorithm
 The dual background technique works by:
@@ -59,9 +78,9 @@ Post-Processing: Apply edge refinement and noise reduction (optional)
 Quality Metrics
 Each processed image is evaluated using:
 
-MSE (Mean Squared Error): Lower is better
-PSNR (Peak Signal-to-Noise Ratio): Higher is better (measured in dB)
-SSIM (Structural Similarity Index): Higher is better (0-1 scale)
+MSE (Mean Squared Error): Lower is better (displayed with 3 decimal precision)
+PSNR (Peak Signal-to-Noise Ratio): Higher is better (measured in dB, 2 decimal precision)
+SSIM (Structural Similarity Index): Higher is better (0-1 scale, 2 decimal precision)
 
 ### Enhanced Super-Resolution Generative Adversarial Networks
 This pipeline supports various ESRGAN-based models and other state-of-the-art upscaling architectures (etc. SwinIR):
