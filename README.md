@@ -27,25 +27,25 @@ cd Sprite-upscaler
 3. Download pretrained models from [Google Drive](https://drive.google.com/drive/folders/1fds6bTbmZJxGoW8pteWWR9sfNTmZcX2N?usp=drive_link). Place the models in `./models`. I provide twenty six different models that varies in architecture and category type. Most of the pre-trained models can be found in https://openmodeldb.info/
 4. Run test. I provide models like (4x_PixelPerfectV4_137000_G, 003_realSR_BSRGAN_DFO_s64w8_SwinIR-M_x4_GAN, RRDB_ESRGAN_x4, RRDB_PSNR and 22 other). Test all models with default settings
 ```
-python test.py
+python main.py
 ```
 
-You can configure additional parameters, etc. which model you want to load in the `test.py` or what should be the generated output size.
+You can configure additional parameters, etc. which model you want to load in the `main.py` or what should be the generated output size.
 ## Test specific model
 ```
-python test.py RRDB_ESRGAN_x4
+python main.py RRDB_ESRGAN_x4
 ```
 ## Resize output to 128x128 pixels
 ```
-python test.py --resize=128x128
+python main.py --resize=128x128
 ```
 ## Scale output to 50% of upscaled size
 ```
-python test.py --resize=0.5
+python main.py --resize=0.5
 ```
 ## Test specific model and resize to 64x64
 ```
-python test.py 4x_PixelPerfectV4_137000_G --resize=64x64
+python main.py 4x_PixelPerfectV4_137000_G --resize=64x64
 ```
 5. The results are in `./results` folder.
 
@@ -53,7 +53,7 @@ python test.py 4x_PixelPerfectV4_137000_G --resize=64x64
 You can interpolate the RRDB_ESRGAN and RRDB_PSNR or any other models with alpha in [0, 1].
 
 1. Run `python net_interp.py 0.8`, where *0.8* is the interpolation parameter and you can change it to any value in [0,1].
-2. Run `python test.py models/interp_08.pth`, where *models/interp_08.pth* is the model path.
+2. Run `python main.py models/interp_08.pth`, where *models/interp_08.pth* is the model path.
 
 <p align="center">
   <img height="400" src="figures/43074.gif">
