@@ -1,56 +1,114 @@
-## ESRGAN (Enhanced SRGAN) [:rocket: [BasicSR](https://github.com/xinntao/BasicSR)] [[Real-ESRGAN](https://github.com/xinntao/Real-ESRGAN)]
+# Sprite Upscaler - AI-Powered Image Upscaling with Transparency Handling
 
-:sparkles: **New Updates.**
+This repository provides a comprehensive pipeline for upscaling images while preserving transparency using multiple AI models. It includes testing codes, pretrained models, a network interpolation demo and advanced metrics visualization.
 
-We have extended ESRGAN to [Real-ESRGAN](https://github.com/xinntao/Real-ESRGAN), which is a **more practical algorithm for real-world image restoration**. For example, it can also remove annoying JPEG compression artifacts. <br> You are recommended to have a try :smiley:
+## Key Features
+- Dual background technique for accurate transparency preservation
+Support for various state-of-the-art AI upscaling models
+Comprehensive image quality metrics (MSE, PSNR, SSIM)
+Flexible output resizing options with scale or dimension control
+Model comparison and benchmarking with automated metrics
+Batch processing with progress tracking
+JSON metrics export for detailed analysis
 
-In the [Real-ESRGAN](https://github.com/xinntao/Real-ESRGAN) repo,
+## Quick Start
+#### Dependencies
+- Python 3
+- [PyTorch >= 1.0](https://pytorch.org/) (CUDA version >= 7.5 if installing with CUDA. [More details](https://pytorch.org/get-started/previous-versions/))
+- Required packages: `pip install numpy opencv-python pillow torch spandrel matplotlib pandas`
 
-- You can still use the original ESRGAN model or your re-trained ESRGAN model. [The model zoo in Real-ESRGAN](https://github.com/xinntao/Real-ESRGAN#european_castle-model-zoo).
-- We provide a more handy inference script, which supports 1) **tile** inference; 2) images with **alpha channel**; 3) **gray** images; 4) **16-bit** images.
-- We also provide a **Windows executable file** `RealESRGAN-ncnn-vulkan` for easier use without installing the environment. This executable file also includes the original ESRGAN model.
-- The full training codes are also released in the [Real-ESRGAN](https://github.com/xinntao/Real-ESRGAN) repo.
+### Test models
+1. Clone this github repo.
+```
+git clone https://github.com/Nedas127/Sprite-upscaler
+cd Sprite-upscaler
+```
+2. Place your own **low-resolution images** in `./LR` folder. (There are fifteen sample images - various „OnlyFortress" 2D mobile game sprites).
+3. Download pretrained models from [Google Drive](https://drive.google.com/drive/folders/1fds6bTbmZJxGoW8pteWWR9sfNTmZcX2N?usp=drive_link). Place the models in `./models`. I provide twenty six different models that varies in architecture and category type. Most of the pre-trained models can be found in https://openmodeldb.info/
+4. Run test. I provide models like (4x_PixelPerfectV4_137000_G, 003_realSR_BSRGAN_DFO_s64w8_SwinIR-M_x4_GAN, RRDB_ESRGAN_x4, RRDB_PSNR and 22 other). Test all models with default settings
+```
+python test.py
+```
 
-Welcome to open issues or open discussions in the [Real-ESRGAN](https://github.com/xinntao/Real-ESRGAN) repo.
+You can configure additional parameters, etc. which model you want to load in the `test.py` or what should be the generated output size.
+## Test specific model
+```
+python test.py RRDB_ESRGAN_x4
+```
+## Resize output to 128x128 pixels
+```
+python test.py --resize=128x128
+```
+## Scale output to 50% of upscaled size
+```
+python test.py --resize=0.5
+```
+## Test specific model and resize to 64x64
+```
+python test.py 4x_PixelPerfectV4_137000_G --resize=64x64
+```
+5. The results are in `./results` folder.
 
-- If you have any question, you can open an issue in the [Real-ESRGAN](https://github.com/xinntao/Real-ESRGAN) repo.
-- If you have any good ideas or demands, please open an issue/discussion in the [Real-ESRGAN](https://github.com/xinntao/Real-ESRGAN) repo to let me know.
-- If you have some images that Real-ESRGAN could not well restored, please also open an issue/discussion in the [Real-ESRGAN](https://github.com/xinntao/Real-ESRGAN) repo. I will record it (but I cannot guarantee to resolve it😛).
+### Network interpolation demo
+You can interpolate the RRDB_ESRGAN and RRDB_PSNR or any other models with alpha in [0, 1].
 
-Here are some examples for Real-ESRGAN:
+1. Run `python net_interp.py 0.8`, where *0.8* is the interpolation parameter and you can change it to any value in [0,1].
+2. Run `python test.py models/interp_08.pth`, where *models/interp_08.pth* is the model path.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/xinntao/Real-ESRGAN/master/assets/teaser.jpg">
+  <img height="400" src="figures/43074.gif">
 </p>
-:book: Real-ESRGAN: Training Real-World Blind Super-Resolution with Pure Synthetic Data
 
-> [[Paper](https://arxiv.org/abs/2107.10833)] <br>
-> [Xintao Wang](https://xinntao.github.io/), Liangbin Xie, [Chao Dong](https://scholar.google.com.hk/citations?user=OSDCB0UAAAAJ), [Ying Shan](https://scholar.google.com/citations?user=4oXBp9UAAAAJ&hl=en) <br>
-> Applied Research Center (ARC), Tencent PCG<br>
-> Shenzhen Institutes of Advanced Technology, Chinese Academy of Sciences
+### Metrics Visualization
+After running the tests, you can generate detailed visualization charts for model performance analysis:
 
------
+Configure the visualization script: Update the model name and paths in the visualization script:
 
-As there may be some repos have dependency on this ESRGAN repo, we will not modify this ESRGAN repo (especially the codes).
+1. `pythonmodel_name = "your_model_name"`  # e.g., "4x_foolhardy_Remacri"
+2. `base_dir = r"path_to_your_results"`  # e.g., r"C:\Users\username\ESRGAN\all_models_results"
 
-The following is the original README:
+Generated outputs:
 
-#### The training codes are in :rocket: [BasicSR](https://github.com/xinntao/BasicSR). This repo only provides simple testing codes, pretrained models and the network interpolation demo.
+Interactive matplotlib charts showing PSNR, SSIM, and MSE metrics
+High-resolution PNG diagram saved as metrics_diagram.png
+Professional styling with color-coded metrics and grid overlays
 
-[BasicSR](https://github.com/xinntao/BasicSR) is an **open source** image and video super-resolution toolbox based on PyTorch (will extend to more restoration tasks in the future). <br>
-It includes methods such as **EDSR, RCAN, SRResNet, SRGAN, ESRGAN, EDVR**, etc. It now also supports **StyleGAN2**.
+### Pipeline Architecture
+Core Components:
+
+ImageProcessor: Handles transparency extraction and image resizing
+ModelProcessor: Manages model loading and upscaling operations
+MetricsCalculator: Computes MSE, PSNR, and SSIM quality metrics
+UpscalingPipeline: Orchestrates the complete processing workflow
+MetricsVisualizer: Generates professional charts and statistical analysis
+
+Transparency Preservation Algorithm
+The dual background technique works by:
+
+Dual Processing: Upscale the image on both white and black backgrounds
+Alpha Extraction: Calculate transparency from the difference between results
+Color Recovery: Derive true RGB values using alpha blending mathematics
+Post-Processing: Apply edge refinement and noise reduction (optional)
+
+Quality Metrics
+Each processed image is evaluated using:
+
+MSE (Mean Squared Error): Lower is better (displayed with 3 decimal precision)
+PSNR (Peak Signal-to-Noise Ratio): Higher is better (measured in dB, 2 decimal precision)
+SSIM (Structural Similarity Index): Higher is better (0-1 scale, 2 decimal precision)
 
 ### Enhanced Super-Resolution Generative Adversarial Networks
+This pipeline supports various ESRGAN-based models and other state-of-the-art upscaling architectures (etc. SwinIR):
+
+ESRGAN variants: RRDB_ESRGAN_x4, RRDB_PSNR
+Specialized models: 4x_PixelPerfectV4_137000_G, 003_realSR_BSRGAN_DFO_s64w8_SwinIR-M_x4_GAN
+And 22+ additional pretrained models
+
+Based on the Enhanced Super-Resolution Generative Adversarial Networks (ESRGAN) research by Xintao Wang et al., which won first place in PIRM2018-SR competition.
+
 By Xintao Wang, [Ke Yu](https://yuke93.github.io/), Shixiang Wu, [Jinjin Gu](http://www.jasongt.com/), Yihao Liu, [Chao Dong](https://scholar.google.com.hk/citations?user=OSDCB0UAAAAJ&hl=en), [Yu Qiao](http://mmlab.siat.ac.cn/yuqiao/), [Chen Change Loy](http://personal.ie.cuhk.edu.hk/~ccloy/)
 
-We won the first place in [PIRM2018-SR competition](https://www.pirm2018.org/PIRM-SR.html) (region 3) and got the best perceptual index.
 The paper is accepted to [ECCV2018 PIRM Workshop](https://pirm2018.org/).
-
-:triangular_flag_on_post: Add [Frequently Asked Questions](https://github.com/xinntao/ESRGAN/blob/master/QA.md).
-
-> For instance,
-> 1. How to reproduce your results in the PIRM18-SR Challenge (with low perceptual index)?
-> 2. How do you get the perceptual index in your ESRGAN paper?
 
 #### BibTeX
 
@@ -75,38 +133,9 @@ The **RRDB_PSNR** PSNR_oriented model trained with DF2K dataset (a merged datase
 | <sub>[RCAN](https://github.com/yulunzhang/RCAN)</sub> |  <sub>DIV2K</sub> | <sub>32.63/0.9002</sub> | <sub>28.87/0.7889</sub> | <sub>27.77/0.7436</sub> | <sub>26.82/ 0.8087</sub>| <sub>31.22/ 0.9173</sub>|
 |<sub>RRDB(ours)</sub>| <sub>DF2K</sub>| <sub>**32.73/0.9011**</sub> |<sub>**28.99/0.7917**</sub> |<sub>**27.85/0.7455**</sub> |<sub>**27.03/0.8153**</sub> |<sub>**31.66/0.9196**</sub>|
 
-## Quick Test
-#### Dependencies
-- Python 3
-- [PyTorch >= 1.0](https://pytorch.org/) (CUDA version >= 7.5 if installing with CUDA. [More details](https://pytorch.org/get-started/previous-versions/))
-- Python packages:  `pip install numpy opencv-python`
-
-### Test models
-1. Clone this github repo.
-```
-git clone https://github.com/xinntao/ESRGAN
-cd ESRGAN
-```
-2. Place your own **low-resolution images** in `./LR` folder. (There are two sample images - baboon and comic).
-3. Download pretrained models from [Google Drive](https://drive.google.com/drive/u/0/folders/17VYV_SoZZesU6mbxz2dMAIccSSlqLecY) or [Baidu Drive](https://pan.baidu.com/s/1-Lh6ma-wXzfH8NqeBtPaFQ). Place the models in `./models`. We provide two models with high perceptual quality and high PSNR performance (see [model list](https://github.com/xinntao/ESRGAN/tree/master/models)).
-4. Run test. We provide ESRGAN model and RRDB_PSNR model and you can config in the `test.py`.
-```
-python test.py
-```
-5. The results are in `./results` folder.
-### Network interpolation demo
-You can interpolate the RRDB_ESRGAN and RRDB_PSNR models with alpha in [0, 1].
-
-1. Run `python net_interp.py 0.8`, where *0.8* is the interpolation parameter and you can change it to any value in [0,1].
-2. Run `python test.py models/interp_08.pth`, where *models/interp_08.pth* is the model path.
-
-<p align="center">
-  <img height="400" src="figures/43074.gif">
-</p>
-
 ## Perceptual-driven SR Results
 
-You can download all the resutls from [Google Drive](https://drive.google.com/drive/folders/1iaM-c6EgT1FNoJAOKmDrK7YhEhtlKcLx?usp=sharing). (:heavy_check_mark: included;  :heavy_minus_sign: not included; :o: TODO)
+You can download ESRGAN research results from [Google Drive](https://drive.google.com/drive/folders/1iaM-c6EgT1FNoJAOKmDrK7YhEhtlKcLx?usp=sharing). (:heavy_check_mark: included;  :heavy_minus_sign: not included; :o: TODO)
 
 HR images can be downloaed from [BasicSR-Datasets](https://github.com/xinntao/BasicSR#datasets).
 
@@ -185,18 +214,20 @@ have impact on the occurrence of BN artifacts.
   <img src="figures/BN_artifacts.jpg">
 </p>
 
-## Useful techniques to train a very deep network
-We find that residual scaling and smaller initialization can help to train a very deep network. More details are in the Supplementary File attached in our [paper](https://arxiv.org/abs/1809.00219).
+## Performance Notes
+The pipeline automatically uses CUDA if available
 
-<p align="center">
-  <img height="250" src="figures/train_deeper_neta.png">
-  <img height="250" src="figures/train_deeper_netb.png">
-</p>
+Processing time varies by model complexity and image size
 
-## The influence of training patch size
-We observe that training a deeper network benefits from a larger patch size. Moreover, the deeper model achieves more improvement (∼0.12dB) than the shallower one (∼0.04dB) since larger model capacity is capable of taking full advantage of
-larger training patch size. (Evaluated on Set5 dataset with RGB channels.)
-<p align="center">
-  <img height="250" src="figures/patch_a.png">
-  <img height="250" src="figures/patch_b.png">
-</p>
+Memory requirements depend on model size and input dimensions
+
+## Credits
+This project builds upon:
+
+ESRGAN by Xintao Wang et al.
+
+BasicSR framework
+
+Spandrel https://github.com/chaiNNer-org/spandrel
+
+Various pre-trained models from OpenModelDB
